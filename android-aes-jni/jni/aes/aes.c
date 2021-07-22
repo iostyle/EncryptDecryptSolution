@@ -18,7 +18,7 @@
 /*************************** HEADER FILES ***************************/
 #include <stdlib.h>
 #include <memory.h>
-#include "lika.h"
+#include "aes.h"
 
 #include <stdio.h>
 
