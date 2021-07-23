@@ -51,3 +51,6 @@ UnlimitedJCEPolicyJDK8目录下的两个文件
 
 ### jar包加固
 使用Allatori 参考链接https://blog.csdn.net/jianning0925/article/details/107708437
+
+## VAP 
+我在VAP提交了代码，你可以使用StreamContainer传入解密出的byteArray直接进行播放，避免了解密到磁盘目录被他人盗用
