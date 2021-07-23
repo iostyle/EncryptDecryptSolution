@@ -37,7 +37,8 @@ MacOS
 chmod +x MacOS.sh
 ./MacOS.sh
 
-2.手动启动
+2.手动启动  
+
 MacOS 终端/Windows CMD：java -jar Encrypt.jar (注意路径)
 
 ### 由于美国法律限制，基于你的jdk版本，你可能会遇到这个错误
