@@ -49,7 +49,7 @@ UnlimitedJCEPolicyJDK8目录下的两个文件
 ## 出于安全考虑，我强烈建议你进行加固处理，无论是so库还是jar包
 
 ### so库加固 
-市面上有很多对so库进行加固的支持，有收费的也有免费的，请自行选择，当然你也可以联系我
+市面上有很多对so库进行加固的支持，费用和安全性也不完全相同，请自行选择，当然你也可以联系我协助你加固
 
 ### jar包加固
 使用Allatori 参考链接https://blog.csdn.net/jianning0925/article/details/107708437
