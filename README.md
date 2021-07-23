@@ -41,9 +41,9 @@ chmod +x MacOS.sh
 
 MacOS 终端/Windows CMD：java -jar Encrypt.jar (注意路径)
 
-### 由于美国法律限制，基于你的jdk版本，你可能会遇到这个错误
-java.security.InvalidKeyException: Illegal key size 
-报错解决方案：
+#### 由于美国法律限制，基于你的jdk版本，你可能会遇到这个错误
+java.security.InvalidKeyException: Illegal key size   
+以jdk8为例，解决方案：
 
 UnlimitedJCEPolicyJDK8目录下的两个文件
 
