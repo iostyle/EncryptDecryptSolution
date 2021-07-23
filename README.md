@@ -48,10 +48,12 @@ UnlimitedJCEPolicyJDK8目录下的两个文件
 如果安装了JRE，将两个jar文件放到%JRE_HOME%\lib\security目录下覆盖原来的文件  
 如果安装了JDK，还要将两个jar文件也放到%JDK_HOME%\jre\lib\security目录下覆盖原来文件。
 
-## 出于安全考虑，我强烈建议你进行加固处理，无论是so库还是jar包
+## 安全性
 
 ### so库加固 
-市面上有很多对so库进行加固的支持，费用和安全性也不完全相同，请自行选择，当然你也可以联系我协助你加固
+我们可以通过IDA反编译so库拿到密钥，这是非常不安全的，我强烈建议你对so库进行加固处理 
+
+市面上有很多对so库进行加固的支持，费用和安全性也不完全相同，请自行选择，当然你也可以联系我
 
 ### jar包加固
 使用Allatori 参考链接https://blog.csdn.net/jianning0925/article/details/107708437
