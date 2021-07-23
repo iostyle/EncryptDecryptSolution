@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 9 - Integration with Apache Ant</h1>
+<p>
+Files located in the <i>tutorial/step09-ant/files</i> directory:
+<table cellspacing="0" cellpadding="0" border="0">
+<tr><td><i>MouseGestures-1.2</i></td><td>Mouse Gestures library source distribution</td></tr>
+</table>
+<br><br>
+In this step we will integrate Allatori into the build process using <a href="http://ant.apache.org">Apache Ant</a> build tool.
+We will use source distribution of Mouse Gestures library as an example and will change its <i>build.xml</i> file. Added information is in <b>bold</b>:</p>
+<pre>
+&lt;!--
+
+  MouseGestures ANT build script.
+
+-->
+&lt;project name="MouseGestures" default="all" basedir=".">
+    &lt;target name="init">
+        &lt;property name="Name" value="MouseGestures"/>
+        &lt;property name="MouseGestures.src" value="src"/>
+        &lt;property name="MouseGestures.build" value="build"/>
+        &lt;property name="MouseGestures.build.classes" value="build/classes"/>
+        &lt;property name="MouseGestures.dist" value="dist"/>
+        &lt;property name="MouseGestures.dist.api" value="${MouseGestures.dist}/api"/>
+        &lt;property name="MouseGestures.jar" value="mousegestures-1.2.jar"/>
+        &lt;property name="MouseGestures.test.jar" value="test.jar"/>
+        &lt;property name="MouseGestures.icon" value="com/smardec/mousegestures/test/img"/>
+        &lt;property name="MouseGestures.manifest" value="com/smardec/mousegestures/test/manifest.mf"/>
+    &lt;/target>
+
+    &lt;target name="prepare" depends="init">
+        &lt;mkdir dir="${MouseGestures.build}"/>
+        &lt;mkdir dir="${MouseGestures.build.classes}"/>
+        &lt;mkdir dir="${MouseGestures.dist}"/>
+        &lt;mkdir dir="${MouseGestures.dist.api}"/>
+    &lt;/target>
+
+    &lt;target name="compile" depends="prepare">
+        &lt;depend srcdir="${MouseGestures.src}" destdir="${MouseGestures.build.classes}" closure="yes"/>
+        &lt;javac srcdir="${MouseGestures.src}" destdir="${MouseGestures.build.classes}" debug="on"/>
+    &lt;/target>
+
+    &lt;target name="jar" depends="compile">
+        &lt;jar jarfile="${MouseGestures.dist}/${MouseGestures.jar}">
+            &lt;fileset dir="${MouseGestures.build.classes}" excludes="**/test/**"/>
+        &lt;/jar>
+        &lt;copy todir="${MouseGestures.build.classes}/${MouseGestures.icon}">
+            &lt;fileset dir="${MouseGestures.src}/${MouseGestures.icon}"/>
+        &lt;/copy>
+        &lt;jar jarfile="${MouseGestures.dist}/${MouseGestures.test.jar}" manifest="${MouseGestures.src}/${MouseGestures.manifest}">
+            &lt;fileset dir="${MouseGestures.build.classes}" includes="**/test/**"/>
+        &lt;/jar>
+    &lt;/target>
+
+    <b>&lt;target name="obfuscate" depends="jar">
+        &lt;taskdef name="allatori" classname="com.allatori.ant.ObfuscatorTask" classpath="../../../../lib/allatori.jar"/>
+        &lt;allatori config="config.xml"/>
+    &lt;/target></b>
+
+    &lt;target name="javadocs">
+        &lt;javadoc    packagenames="com.smardec.mousegestures"
+                    sourcepath="${MouseGestures.src}"
+                    destdir="${MouseGestures.dist.api}"
+                    author="true"
+                    version="true"
+                    windowtitle="${Name} API Documentation"
+                    doctitle="${Name} API Documentation"
+                    notree="true"
+                    nodeprecatedlist="true"
+                    bottom="Copyright &#169; 2003-2004 Smardec"
+                    failonerror="true">
+        &lt;/javadoc>
+    &lt;/target>
+
+    &lt;target name="all" depends="jar, <b>obfuscate, </b>javadocs"/>
+
+    &lt;target name="clean" depends="init">
+        &lt;delete dir="${MouseGestures.build}"/>
+        &lt;delete dir="${MouseGestures.dist}"/>
+    &lt;/target>
+&lt;/project>
+</pre>
+<p>
+Now, Ant build script produces obfuscated jar files.
+<br><br>Note: You can reference properties defined in the Ant build file from the Allatori configuration file using standard Ant syntax: ${PropertyName}.
+</p>
+<p><a href="../step08-stacktrace/step8.html">Step 8</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../step10-expiry-date/step10.html">Step 10</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>

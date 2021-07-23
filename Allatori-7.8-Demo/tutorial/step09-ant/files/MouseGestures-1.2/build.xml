@@ -1,0 +1,70 @@
+<!--
+
+  MouseGestures ANT build script.
+
+-->
+<project name="MouseGestures" default="all" basedir=".">
+    <target name="init">
+        <property name="Name" value="MouseGestures"/>
+        <property name="MouseGestures.src" value="src"/>
+        <property name="MouseGestures.build" value="build"/>
+        <property name="MouseGestures.build.classes" value="build/classes"/>
+        <property name="MouseGestures.dist" value="dist"/>
+        <property name="MouseGestures.dist.api" value="${MouseGestures.dist}/api"/>
+        <property name="MouseGestures.jar" value="mousegestures-1.2.jar"/>
+        <property name="MouseGestures.test.jar" value="test.jar"/>
+        <property name="MouseGestures.icon" value="com/smardec/mousegestures/test/img"/>
+        <property name="MouseGestures.manifest" value="com/smardec/mousegestures/test/manifest.mf"/>
+    </target>
+
+    <target name="prepare" depends="init, clean">
+        <mkdir dir="${MouseGestures.build}"/>
+        <mkdir dir="${MouseGestures.build.classes}"/>
+        <mkdir dir="${MouseGestures.dist}"/>
+        <mkdir dir="${MouseGestures.dist.api}"/>
+    </target>
+
+    <target name="compile" depends="prepare">
+        <depend srcdir="${MouseGestures.src}" destdir="${MouseGestures.build.classes}" closure="yes"/>
+        <javac srcdir="${MouseGestures.src}" destdir="${MouseGestures.build.classes}" debug="on"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar jarfile="${MouseGestures.dist}/${MouseGestures.jar}">
+            <fileset dir="${MouseGestures.build.classes}" excludes="**/test/**"/>
+        </jar>
+        <copy todir="${MouseGestures.build.classes}/${MouseGestures.icon}">
+            <fileset dir="${MouseGestures.src}/${MouseGestures.icon}"/>
+        </copy>
+        <jar jarfile="${MouseGestures.dist}/${MouseGestures.test.jar}" manifest="${MouseGestures.src}/${MouseGestures.manifest}">
+            <fileset dir="${MouseGestures.build.classes}" includes="**/test/**"/>
+        </jar>
+    </target>
+
+    <target name="obfuscate" depends="jar">
+        <taskdef name="allatori" classname="com.allatori.ant.ObfuscatorTask" classpath="../../../../lib/allatori.jar"/>
+        <allatori config="config.xml"/>
+    </target>
+
+    <target name="javadocs">
+        <javadoc    packagenames="com.smardec.mousegestures"
+                    sourcepath="${MouseGestures.src}"
+                    destdir="${MouseGestures.dist.api}"
+                    author="true"
+                    version="true"
+                    windowtitle="${Name} API Documentation"
+                    doctitle="${Name} API Documentation"
+                    notree="true"
+                    nodeprecatedlist="true"
+                    bottom="Copyright &#169; 2003-2004 Smardec"
+                    failonerror="true">
+        </javadoc>
+    </target>
+
+    <target name="all" depends="jar, obfuscate, javadocs"/>
+
+    <target name="clean" depends="init">
+        <delete dir="${MouseGestures.build}"/>
+        <delete dir="${MouseGestures.dist}"/>
+    </target>
+</project>

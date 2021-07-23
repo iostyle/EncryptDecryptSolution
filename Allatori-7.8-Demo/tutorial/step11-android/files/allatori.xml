@@ -1,0 +1,40 @@
+<config>
+    <input>
+        <dir in="${out.classes.absolute.dir}" out="${out.classes.absolute.dir}-obfuscated"/>
+    </input>
+
+    <classpath>
+        <jar name="${android.jar}"/>
+        <jar name="${project.target.android.jar}"/>
+    </classpath>
+
+    <keep-names>
+        <class template="public class * instanceof android.app.Activity">
+            <method template="public void *(android.view.View)"/>
+        </class>
+        <class template="public class * instanceof android.view.View">
+            <method template="void set*(**)"/>
+            <method template="get*()"/>
+        </class>
+        <class template="class * extends java.lang.Enum">
+            <method template="values()"/>
+            <method template="valueOf(java.lang.String)"/>
+        </class>
+        <class template="class * implements android.os.Parcelable">
+            <field template="public static final android.os.Parcelable*Creator *"/>
+        </class>
+        <class template="class *.R*">
+            <field template="public static *"/>
+        </class>
+        <class template="public class * instanceof android.app.Application"/>
+        <class template="public class * instanceof android.app.Service"/>
+        <class template="public class * instanceof android.content.BroadcastReceiver"/>
+        <class template="public class * instanceof android.content.ContentProvider"/>
+        <class template="public class * instanceof android.app.backup.BackupAgentHelper"/>
+        <class template="public class * instanceof android.preference.Preference"/>
+        <class template="public class com.android.vending.licensing.ILicensingService"/>
+        <class template="public class com.google.android.vending.licensing.ILicensingService"/>
+    </keep-names>
+
+    <property name="log-file" value="log.xml"/>
+</config>

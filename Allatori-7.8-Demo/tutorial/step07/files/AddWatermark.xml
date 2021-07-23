@@ -1,0 +1,8 @@
+<config>
+    <input>
+        <jar in="test.jar" out="marked-test.jar"/>
+        <jar in="mousegestures-1.2.jar" out="marked-mousegestures-1.2.jar"/>
+    </input>
+
+    <watermark key="secure-key-to-extract-watermark" value="Customer: John Smith; Date: xx.yy.zzzz"/>
+</config>

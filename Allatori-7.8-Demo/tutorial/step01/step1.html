@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 1 - Basic Library Obfuscation</h1>
+<p>
+Files located in the <i>tutorial/step01/files</i> directory:
+<table cellspacing="0" cellpadding="0" border="0">
+<tr><td><i>mousegestures-1.2.jar</i></td><td>Mouse Gestures library jar</td></tr>
+<tr><td><i>test.jar</i></td><td>Jar with Mouse Gestures demo frame</td></tr>
+<tr><td><i>config.xml</i></td><td>Allatori configuration file</td></tr>
+<tr><td><i>RunAllatori.bat</i></td><td>Runs Allatori</td></tr>
+<tr><td><i>MouseGesturesOriginal.bat</i></td><td>Runs original version of Mouse Gestures</td></tr>
+<tr><td><i>MouseGesturesObfuscated.bat</i></td><td>Runs obfuscated version of Mouse Gestures</td></tr>
+<tr><td><i>Clean.bat</i></td><td>Deletes generated files</td></tr>
+</table>
+<br><br>
+In the first step we will obfuscate Mouse Gestures as a typical library, i.e. all public API methods should not be renamed.
+This guarantees that all applications, which are using the original Mouse Gestures jars, could use the obfuscated jars.
+It is a common situation when you are developing a library which is used in third party products.
+<br><br>
+Running <i>RunAllatori.bat</i> results in creating 3 files:
+<i>obf-mousegestures-1.2.jar</i> and <i>obf-test.jar</i> are obfuscated versions of the Mouse Gestures jars, <i>log.xml</i> is a log file created during obfuscation process.
+<br><br>
+Now you can run <i>MouseGesturesOriginal.bat</i> and <i>MouseGesturesObfuscated.bat</i> to test the original and obfuscated versions of the application.
+Note that demo version of Allatori adds <i>System.out</i>'s to the obfuscated application.
+<br><br>
+Let's look at the <i>config.xml</i>:</p>
+<pre>
+&lt;config>
+    &lt;input>
+        &lt;jar in="test.jar" out="obf-test.jar"/>
+        &lt;jar in="mousegestures-1.2.jar" out="obf-mousegestures-1.2.jar"/>
+    &lt;/input>
+
+    &lt;keep-names>
+        &lt;class access="protected+">
+            &lt;field access="protected+"/>
+            &lt;method access="protected+"/>
+        &lt;/class>
+    &lt;/keep-names>
+
+    &lt;property name="log-file" value="log.xml"/>
+&lt;/config>
+</pre>
+<p>
+The <i>jars</i> section defines input and output jar files.
+If you use the same file name for <i>in</i> and <i>out</i> attributes, then the jar will be overwritten with its obfuscated version.
+<br><br>
+The <i>keep-names</i> section defines class, method and field names that should not be renamed.
+As we obfuscate a library, we expose all externally visible classes, fields and methods by setting <i>access</i> attribute to <i>protected+</i>.
+It means, that everything with visibility 'protected' and higher ('public') will have their names unchanged.
+<br><br>
+<i>log-file</i> property defines the name of the log file.
+It can be removed from the configuration if you don't need a log of the obfuscation process.
+An example when log file is needed can be found in the <a href="../step08-stacktrace/step8.html">Step 8</a>.
+<br><br>
+<i>Clean.bat</i> removes <i>obf-mousegestures-1.2.jar</i>, <i>obf-test.jar</i> and <i>log.xml</i> files.
+</p>
+<p><a href="../step02/step2.html">Step 2</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>

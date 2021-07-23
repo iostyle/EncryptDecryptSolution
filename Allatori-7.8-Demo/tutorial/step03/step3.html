@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 3 - Obfuscation with Setting Classpath</h1>
+<p>
+Files located in the <i>tutorial/step03/files</i> directory:
+<table cellspacing="0" cellpadding="0" border="0">
+<tr><td><i>mousegestures-1.2.jar</i></td><td>Mouse Gestures library jar</td></tr>
+<tr><td><i>test.jar</i></td><td>Jar with Mouse Gestures demo frame</td></tr>
+<tr><td><i>config.xml</i></td><td>Allatori configuration file</td></tr>
+<tr><td><i>RunAllatori.bat</i></td><td>Runs Allatori</td></tr>
+<tr><td><i>MouseGesturesOriginal.bat</i></td><td>Runs original version of Mouse Gestures</td></tr>
+<tr><td><i>MouseGesturesObfuscated.bat</i></td><td>Runs obfuscated version of Mouse Gestures</td></tr>
+<tr><td><i>Clean.bat</i></td><td>Deletes generated files</td></tr>
+</table>
+<br><br>
+Here, we will obfuscate our jars as if <i>test.jar</i> is a stand-alone application and <i>mousegestures-1.2.jar</i> is a third party library used by <i>test.jar</i>.
+<br><br>
+Let's look what we've changed in the configuration file, changes are in <b>bold</b>:</p>
+<pre>
+&lt;config>
+    &lt;input>
+        &lt;jar in="test.jar" out="obf-test.jar"/>
+    &lt;/input>
+
+    <b>&lt;classpath>
+        &lt;jar name="mousegestures-1.2.jar"/>
+    &lt;/classpath></b>
+
+    &lt;keep-names>
+        &lt;class template="class *.TestFrame"/>
+    &lt;/keep-names>
+
+    &lt;property name="log-file" value="log.xml"/>
+&lt;/config>
+</pre>
+<p>
+We have removed <i>mousegestures-1.2.jar</i> from <i>jars</i> section and added new <i>classpath</i> section referencing Mouse Gestures library.
+It is not necessary to reference all jars needed by your application in the <i>classpath</i> section. However, missing classpath elements may result in a weaker obfuscation.
+If you delete (or comment) <i>classpath</i> section, Allatori will warn you about missing classes during the obfuscation process.
+</p>
+<p><a href="../step02/step2.html">Step 2</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../step04/step4.html">Step 4</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>

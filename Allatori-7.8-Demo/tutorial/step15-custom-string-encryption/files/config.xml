@@ -1,0 +1,28 @@
+<config>
+    <input>
+        <jar in="test.jar" out="obf-test.jar"/>
+        <jar in="mousegestures-1.2.jar" out="obf-mousegestures-1.2.jar"/>
+
+        <jar in="custom.jar" out="obf-custom.jar"/>
+    </input>
+
+    <keep-names>
+        <class access="protected+">
+            <field access="protected+"/>
+            <method access="protected+"/>
+        </class>
+    </keep-names>
+
+    <!-- We recommend using the v3 setting if custom string encryption is applied to ALL your classes. -->
+    <!-- This way Allatori would not add any additional (unused) string decryption methods. -->
+    <!-- If you combine custom string encryption and Allatori string encryption, then the default v4 setting is recommended. -->
+    <property name="string-encryption-version" value="v3"/>
+
+    <!-- Disabling string encryption in custom decryption methods, as it could lead to infinite recursive calls. -->
+    <property name="string-encryption" value="disable" apply2class="class com.allatori.custom.EncryptDecryptString" apply2method="decrypt*(java.lang.String)"/>
+
+    <property name="string-encryption" value="maximum"/>
+    <property name="string-encryption-type" value="custom(com.allatori.custom.EncryptDecryptString.encryptString, com.allatori.custom.EncryptDecryptString.decryptString)"/>
+
+    <property name="log-file" value="log.xml"/>
+</config>

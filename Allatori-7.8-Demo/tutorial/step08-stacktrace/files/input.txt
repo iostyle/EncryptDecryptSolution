@@ -1,0 +1,5 @@
+java.lang.NullPointerException
+        at javax.swing.SwingUtilities.convertPointToScreen(SwingUtilities.java:282)
+        at com.smardec.mousegestures.c.a(h:258)
+        at com.smardec.mousegestures.d.eventDispatched(i:78)
+        ...

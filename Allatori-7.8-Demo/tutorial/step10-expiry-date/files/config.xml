@@ -1,0 +1,14 @@
+<config>
+    <input>
+        <jar in="test.jar" out="obf-test.jar"/>
+        <jar in="mousegestures-1.2.jar" out="obf-mousegestures-1.2.jar"/>
+    </input>
+
+    <keep-names>
+        <class template="class *.TestFrame"/>
+    </keep-names>
+
+    <property name="log-file" value="log.xml"/>
+
+    <expiry date="2000/01/01" string="EXPIRED!"/> <!-- the obfuscated application will be expired and would not run -->
+</config>

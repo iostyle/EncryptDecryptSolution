@@ -1,0 +1,1 @@
+java -cp obf-test.jar;obf-mousegestures-1.2.jar com.smardec.mousegestures.test.TestFrame

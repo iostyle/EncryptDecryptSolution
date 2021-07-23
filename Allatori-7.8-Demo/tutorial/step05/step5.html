@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 5 - Introduction to Watermarks</h1>
+<p>
+Files located in the <i>tutorial/step05/files</i> directory:
+<table cellspacing="0" cellpadding="0" border="0">
+<tr><td><i>mousegestures-1.2.jar</i></td><td>Mouse Gestures library jar</td></tr>
+<tr><td><i>test.jar</i></td><td>Jar with Mouse Gestures demo frame</td></tr>
+<tr><td><i>config.xml</i></td><td>Allatori configuration file</td></tr>
+<tr><td><i>RunAllatori.bat</i></td><td>Runs Allatori</td></tr>
+<tr><td><i>ExtractWatermark.bat</i></td><td>Runs Allatori's watermark extracting class</td></tr>
+<tr><td><i>ExtractWatermark.xml</i></td><td>Configuration file for extracting a watermark</td></tr>
+<tr><td><i>Clean.bat</i></td><td>Deletes generated files</td></tr>
+</table>
+<br><br>
+Here we will show you how to use watermarks.
+<br><br>
+Let's look what we've changed in the configuration file, changes are in <b>bold</b>:</p>
+<pre>
+&lt;config>
+    &lt;input single-jar="single.jar">
+        &lt;jar in="test.jar" out="obf-test.jar"/>
+        &lt;jar in="mousegestures-1.2.jar" out="obf-mousegestures-1.2.jar"/>
+    &lt;/input>
+
+    &lt;keep-names>
+        &lt;class template="class *.TestFrame"/>
+    &lt;/keep-names>
+
+    &lt;property name="log-file" value="log.xml"/>
+
+    <b>&lt;watermark key="secure-key-to-extract-watermark" value="Customer: John Smith; Date: xx.yy.zzzz"/></b>
+&lt;/config>
+</pre>
+<p>
+We have added a <i>watermark</i> element with the following attributes:
+<br><i>key</i> - the key that is used to embed a watermark into the application using steganography techniques;
+<br><i>value</i> - any string that will be embedded into application jars.
+It can be copyright, customer name, company name or any other information that uniquely identifies the build.
+A watermark can be used to identify owners of the software or track the origin of a pirated copy.
+<br><br>
+To extract the watermark we need another configuration file:</p>
+<pre>
+&lt;config>
+    &lt;input>
+        &lt;jar in="single.jar"/>
+    &lt;/input>
+
+    &lt;watermark key="secure-key-to-extract-watermark"/>
+&lt;/config>
+</pre>
+<p>
+We specified jar file that contains the watermark and the key for the extraction.
+The key should match the key used for embedding.
+If you specify the wrong key, then watermark wouldn't be extracted.
+<br><br>
+Run <i>ExtractWatermark.bat</i> to see the extracted watermark.
+</p>
+<p><a href="../step04/step4.html">Step 4</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../step06/step6.html">Step 6</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>

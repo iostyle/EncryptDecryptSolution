@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 11 - Obfuscating Android applications</h1>
+<p>
+Files located in the <i>tutorial/step11-android/files</i> directory:
+<table cellspacing="0" cellpadding="0" border="0">
+<tr><td><i>allatori.xml</i></td><td>Typical configuration file</td></tr>
+<tr><td><i>build.xml</i></td><td>Sample build file</td></tr>
+</table>
+<br><br>
+<b>Android Studio integration is in the <a href="../step13-android-studio/step13.html">Step 13</a></b>
+<br><br>
+Here are three steps to set up Allatori for your Android project:
+<br>1. Copy <i>allatori.xml</i> to your project's folder (from <i>tutorial\step11-android\files</i>);
+<br>2. Create <i>allatori</i> folder in your project's folder. Copy <i>allatori.jar</i> to the created folder;
+<br>3. Add the following target to your <i>build.xml</i> (sample <i>build.xml</i> is in the <i>tutorial\step11-android\files</i>):
+<pre>
+    &lt;target name="-obfuscate" unless="do.not.compile">
+        &lt;taskdef name="allatori" classname="com.allatori.ant.ObfuscatorTask" classpath="allatori/allatori.jar"/>
+        &lt;delete dir="${out.classes.absolute.dir}-obfuscated"/>
+        &lt;allatori config="allatori.xml"/>
+        &lt;property name="out.dex.input.absolute.dir" value="${out.classes.absolute.dir}-obfuscated"/>
+    &lt;/target>
+</pre>
+<p>You may need to perform further configuration in the <i>allatori.xml</i> for your project.
+You can reference properties defined in the Ant build file from the Allatori configuration file (<i>allatori.xml</i>) using standard Ant syntax: ${PropertyName}.</p>
+<p><br>Here is the full default <i>build.xml</i> with changes in bold:
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;project name="AllatoriIntegration" default="help">
+
+&lt;!-- The local.properties file is created and updated by the 'android'
+     tool.
+     It contains the path to the SDK. It should *NOT* be checked into
+     Version Control Systems. -->
+    &lt;property file="local.properties" />
+
+    &lt;!-- The build.properties file can be created by you and is never touched
+         by the 'android' tool. This is the place to change some of the
+         default property values used by the Ant rules.
+         Here are some properties you may want to change/update:
+
+         source.dir
+             The name of the source directory. Default is 'src'.
+         out.dir
+             The name of the output directory. Default is 'bin'.
+
+         Properties related to the SDK location or the project target should
+         be updated using the 'android' tool with the 'update' action.
+
+         This file is an integral part of the build system for your
+         application and should be checked into Version Control Systems.
+
+         -->
+    &lt;property file="build.properties" />
+
+    &lt;!-- The default.properties file is created and updated by the 'android'
+         tool, as well as ADT.
+         This file is an integral part of the build system for your
+         application and should be checked into Version Control Systems. -->
+    &lt;property file="default.properties" />
+
+
+    &lt;!-- Required pre-setup import -->
+    &lt;import file="${sdk.dir}/tools/ant/pre_setup.xml" />
+
+
+&lt;!-- extension targets. Uncomment the ones where you want to do custom work
+     in between standard targets -->
+&lt;!--
+    &lt;target name="-pre-build">
+    &lt;/target>
+    &lt;target name="-pre-compile">
+    &lt;/target>
+
+    [This is typically used for code obfuscation.
+     Compiled code location: ${out.classes.absolute.dir}
+     If this is not done in place, override ${out.dex.input.absolute.dir}]
+    &lt;target name="-post-compile">
+    &lt;/target>
+-->
+<b>
+    &lt;target name="-obfuscate" unless="do.not.compile">
+        &lt;taskdef name="allatori" classname="com.allatori.ant.ObfuscatorTask" classpath="allatori/allatori.jar"/>
+        &lt;delete dir="${out.classes.absolute.dir}-obfuscated"/>
+        &lt;allatori config="allatori.xml"/>
+        &lt;property name="out.dex.input.absolute.dir" value="${out.classes.absolute.dir}-obfuscated"/>
+    &lt;/target>
+</b>
+    &lt;!-- Execute the Android Setup task that will setup some properties
+         specific to the target, and import the build rules files.
+
+         The rules file is imported from
+            &lt;SDK>/tools/ant/
+         Depending on the project type it can be either:
+         - main_rules.xml
+         - lib_rules.xml
+         - test_rules.xml
+
+         To customize existing targets, there are two options:
+         - Customize only one target:
+             - copy/paste the target into this file, *before* the
+               &lt;setup> task.
+             - customize it to your needs.
+         - Customize the whole script.
+             - copy/paste the content of the rules files (minus the top node)
+               into this file, *after* the &lt;setup> task
+             - disable the import of the rules by changing the setup task
+               below to &lt;setup import="false" />.
+             - customize to your needs.
+    -->
+    &lt;setup />
+
+&lt;/project>
+</pre>
+</p>
+<p><a href="../step10-expiry-date/step10.html">Step 10</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../step12-maven/step12.html">Step 12</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>

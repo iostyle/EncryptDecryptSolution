@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 14 - Eclipse IDE Plugin</h1>
+<p>
+Allatori can be easily used with Eclipse IDE:
+<br/>&nbsp;&nbsp;1. Copy <i>allatori.jar</i> to the <i>eclipse/dropins</i> folder;
+<br/>&nbsp;&nbsp;2. Right-click your project's name in Eclipse, choose <i>Configure -> Add Allatori Builder</i> in the popup menu (<a class="link" href="eclipse.png">see screenshot</a>);
+<br/>&nbsp;&nbsp;3. Clean rebuild the project, obfuscation process runs only on clean builds.
+<br/><br/>The default <i>allatori.xml</i> configuration file will be created in the project's root folder during the first run.
+<br/><br/>You can use <i>${eclipse-input}</i> and <i>${eclipse-classpath}</i> properties in the configuration file:
+<pre>
+    &lt;input>
+        ${eclipse-input}
+    &lt;/input>
+
+    &lt;classpath>
+        ${eclipse-classpath}
+    &lt;/classpath>
+</pre>
+</p>
+<p><a href="../step13-android-studio/step13.html">Step 13</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../step15-custom-string-encryption/step15.html">Step 15</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>

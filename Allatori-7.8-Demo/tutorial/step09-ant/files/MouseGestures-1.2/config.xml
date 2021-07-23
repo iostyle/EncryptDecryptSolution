@@ -1,0 +1,12 @@
+<config>
+    <input basedir="${MouseGestures.dist}">
+        <jar in="${MouseGestures.jar}" out="${MouseGestures.jar}"/>
+        <jar in="${MouseGestures.test.jar}" out="${MouseGestures.test.jar}"/>
+    </input>
+
+    <keep-names>
+        <class template="class *.TestFrame"/>
+    </keep-names>
+
+    <property name="log-file" value="log.xml"/>
+</config>

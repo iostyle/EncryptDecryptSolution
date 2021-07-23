@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 6 - Watermarking without Obfuscation</h1>
+<p>
+Files located in the <i>tutorial/step06/files</i> directory:
+<table cellspacing="0" cellpadding="0" border="0">
+<tr><td><i>mousegestures-1.2.jar</i></td><td>Mouse Gestures library jar</td></tr>
+<tr><td><i>AddWatermark.bat</i></td><td>Runs Allatori's watermark embedding class</td></tr>
+<tr><td><i>AddWatermark.xml</i></td><td>Configuration file for embedding a watermark</td></tr>
+<tr><td><i>ExtractWatermark.bat</i></td><td>Runs Allatori's watermark extracting class</td></tr>
+<tr><td><i>ExtractWatermark.xml</i></td><td>Configuration file for extracting a watermark</td></tr>
+<tr><td><i>Clean.bat</i></td><td>Deletes generated files</td></tr>
+</table>
+<br><br>
+There are situations when you need to watermark the application without obfuscating it, or the application is already obfuscated but not yet watermarked.
+To accomplish this task we need the following configuration file:</p>
+<pre>
+&lt;config>
+    &lt;input>
+        &lt;jar in="mousegestures-1.2.jar" out="marked-mousegestures-1.2.jar"/>
+    &lt;/input>
+
+    &lt;watermark key="secure-key-to-extract-watermark" value="Customer: John Smith; Date: xx.yy.zzzz"/>
+&lt;/config>
+</pre>
+<p>
+Configuration file for extracting the watermark (<i>ExtractWatermark.xml</i>) is similar to the one in the <a href="../step05/step5.html">Step&nbsp;5</a>.
+<br><br>
+Run <i>AddWatermark.bat</i> to embed the watermark and <i>ExtractWatermark.bat</i> to see the extracted watermark.
+</p>
+<p><a href="../step05/step5.html">Step 5</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../step07/step7.html">Step 7</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>

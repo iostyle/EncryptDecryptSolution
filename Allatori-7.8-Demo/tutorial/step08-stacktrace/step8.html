@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 8 - Using Stack Trace Utility</h1>
+<p>
+Files located in the <i>tutorial/step08-stacktrace/files</i> directory:
+<table cellspacing="0" cellpadding="0" border="0">
+<tr><td><i>log.xml</i></td><td>Log file created during the obfuscation process</td></tr>
+<tr><td><i>input.txt</i></td><td>File with sample stack trace of the obfuscated application</td></tr>
+<tr><td><i>StackTraceRestore.bat</i></td><td>Runs Allatori Stack Trace Utility</td></tr>
+<tr><td><i>Clean.bat</i></td><td>Deletes generated files</td></tr>
+</table>
+<br><br>
+Allatori creates a log file after performing the obfuscation process.
+This file is used to restore the original stack trace from the obfuscated one.
+For example, Stack Trace Utility can take as input the following stack trace:</p>
+<pre>
+java.lang.NullPointerException
+        at javax.swing.SwingUtilities.convertPointToScreen(SwingUtilities.java:282)
+        at com.smardec.mousegestures.c.a(h:258)
+        at com.smardec.mousegestures.d.eventDispatched(i:78)
+        ...
+</pre>
+<p>
+and produce the following output:</p>
+<pre>
+java.lang.NullPointerException
+        at javax.swing.SwingUtilities.convertPointToScreen(SwingUtilities.java:282)
+        at com.smardec.mousegestures.MouseGesturesRecognizer.saveMove(MouseGesturesRecognizer.java:87)
+        at com.smardec.mousegestures.MouseGestures$1.eventDispatched(MouseGestures.java:71)
+        ...
+</pre>
+<p>
+All names and line numbers are restored to their original values, which is very useful for debugging the application.
+</p>
+<p><a href="../step07/step7.html">Step 7</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../step09-ant/step9.html">Step 9</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>

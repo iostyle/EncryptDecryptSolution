@@ -1,0 +1,93 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.allatori.myapplication"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+// for applications
+    applicationVariants.all { variant ->
+        // old Gradle versions:
+        // variant.javaCompile.doLast {
+        // new Gradle versions:
+        variant.javaCompileProvider.get().doLast {
+            runAllatori(variant)
+        }
+    }
+
+// for libraries
+/*
+    libraryVariants.all { variant ->
+        // old Gradle versions:
+        // variant.javaCompile.doLast {
+        // new Gradle versions:
+        variant.javaCompileProvider.get().doLast {
+            runAllatori(variant)
+        }
+    }
+*/
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:support-v4:22.1.1'
+}
+
+def runAllatori(variant) {
+    copy {
+        from "$projectDir/allatori.xml"
+        into "$buildDir/intermediates/classes/"
+        // old Gradle versions:
+        // expand(classesRoot: variant.javaCompile.destinationDir,
+        //        kotlinRoot: "${buildDir}/tmp/kotlin-classes/${variant.name}",
+        //        androidJar: "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar",
+        //        classpathJars: variant.javaCompile.classpath.getAsPath(),
+        //        logFile: "allatori-log-${variant.name}.xml")
+        // new Gradle versions:
+        expand(classesRoot: variant.javaCompileProvider.get().destinationDir,
+               kotlinRoot: "${buildDir}/tmp/kotlin-classes/${variant.name}",
+               androidJar: "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar",
+               classpathJars: variant.javaCompileProvider.get().classpath.getAsPath(),
+               logFile: "allatori-log-${variant.name}.xml")
+        rename('allatori.xml', "allatori-${variant.name}.xml")
+    }
+
+    // old Gradle versions:
+    // new File("${variant.javaCompile.destinationDir}-obfuscated").deleteDir()
+    // new Gradle versions:
+    new File("${variant.javaCompileProvider.get().destinationDir}-obfuscated").deleteDir()
+
+    // Kotlin support
+    // new File("${buildDir}/tmp/kotlin-classes/${variant.name}-obfuscated").deleteDir()
+
+    javaexec {
+        main = 'com.allatori.Obfuscate'
+        classpath = files("$rootDir/allatori/allatori.jar")
+        args "$buildDir/intermediates/classes/allatori-${variant.name}.xml"
+    }
+
+    // old Gradle versions:
+    // new File("${variant.javaCompile.destinationDir}").deleteDir()
+    // new File("${variant.javaCompile.destinationDir}-obfuscated").renameTo(new File("${variant.javaCompile.destinationDir}"))
+    // new Gradle versions:
+    new File("${variant.javaCompileProvider.get().destinationDir}").deleteDir()
+    new File("${variant.javaCompileProvider.get().destinationDir}-obfuscated").renameTo(new File("${variant.javaCompileProvider.get().destinationDir}"))
+
+    // Kotlin support
+    // new File("${buildDir}/tmp/kotlin-classes/${variant.name}").deleteDir()
+    // new File("${buildDir}/tmp/kotlin-classes/${variant.name}-obfuscated").renameTo(new File("${buildDir}/tmp/kotlin-classes/${variant.name}"))
+}

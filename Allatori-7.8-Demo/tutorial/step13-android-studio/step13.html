@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 13 - Android Studio Integration</h1>
+<p>
+Files located in the <i>tutorial/step13-android-studio/files</i> directory:
+<table cellspacing="0" cellpadding="0" border="0">
+<tr><td><i>allatori.xml</i></td><td>Typical configuration file</td></tr>
+<tr><td><i>build.gradle</i></td><td>Sample build file</td></tr>
+</table>
+<br><br>
+Follow these steps to set up Allatori for your Android Studio project:
+<br>1. In the <i>rootDir</i> create a folder 'allatori' and copy <i>allatori.jar</i> in there.
+<br>2. Copy Allatori configuration <i>allatori.xml</i> to the <i>projectDir</i> (where project's <i>build.gradle</i> is)
+<br>3. Edit <i>build.gradle</i>:
+<pre>
+android {
+    ...
+    // for applications
+    applicationVariants.all { variant ->
+        variant.javaCompileProvider.get().doLast {
+            runAllatori(variant)
+        }
+    }
+    // for libraries
+    // libraryVariants.all { variant ->
+    //    variant.javaCompileProvider.get().doLast {
+    //        runAllatori(variant)
+    //     }
+    // }
+}
+
+def runAllatori(variant) {
+    copy {
+        from "$projectDir/allatori.xml"
+        into "$buildDir/intermediates/classes/"
+        expand(classesRoot: variant.javaCompileProvider.get().destinationDir,
+                kotlinRoot: "${buildDir}/tmp/kotlin-classes/${variant.name}",
+                androidJar: "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar",
+                classpathJars: variant.javaCompileProvider.get().classpath.getAsPath(),
+                logFile: "allatori-log-${variant.name}.xml")
+        rename('allatori.xml', "allatori-${variant.name}.xml")
+    }
+
+    new File("${variant.javaCompileProvider.get().destinationDir}-obfuscated").deleteDir()
+    javaexec {
+        main = 'com.allatori.Obfuscate'
+        classpath = files("$rootDir/allatori/allatori.jar")
+        args "$buildDir/intermediates/classes/allatori-${variant.name}.xml"
+    }
+    new File("${variant.javaCompileProvider.get().destinationDir}").deleteDir()
+    new File("${variant.javaCompileProvider.get().destinationDir}-obfuscated").renameTo(new File("${variant.javaCompileProvider.get().destinationDir}"))
+
+    // Kotlin support
+    // new File("${buildDir}/tmp/kotlin-classes/${variant.name}").deleteDir()
+    // new File("${buildDir}/tmp/kotlin-classes/${variant.name}-obfuscated").renameTo(new File("${buildDir}/tmp/kotlin-classes/${variant.name}"))
+}
+</pre>
+</p>
+<p><a href="../step12-maven/step12.html">Step 12</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../step14-eclipse/step14.html">Step 14</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>

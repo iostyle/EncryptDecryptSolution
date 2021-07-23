@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Allatori Obfuscator Tutorial</title>
+<style type="text/css"><!--
+html {
+ background-color: #dedede;
+}
+
+body {
+ padding: 30px 80px 30px 50px;
+}
+
+p {
+ font-family: Verdana, Geneva, Arial, sans-serif;
+ font-size: 16px;
+ line-height: 140%;
+ text-align: justify;
+}
+
+a {
+ color: #e96c15;
+ text-decoration: underline;
+}
+
+td {
+ padding: 3px 15px 0px 15px;
+}
+--></style>
+</head>
+<body>
+<h1>Step 15 - Custom String Encryption</h1>
+<p>
+This is <a href="../step01/step1.html">Step 1</a> modified to use custom string encryption.
+<br/><i>custom.jar</i> contains a class with sample encryption/decryption methods along with the source code.
+<br/><br/>Changes in configuration file are in <b>bold</b>:
+<pre>
+&lt;config>
+    &lt;input>
+        &lt;jar in="test.jar" out="obf-test.jar"/>
+        &lt;jar in="mousegestures-1.2.jar" out="obf-mousegestures-1.2.jar"/>
+
+        <b>&lt;jar in="custom.jar" out="obf-custom.jar"/></b>
+    &lt;/input>
+
+    &lt;-names>
+        &lt;class access="protected+">
+            &lt;field access="protected+"/>
+            &lt;method access="protected+"/>
+        &lt;/class>
+    &lt;/keep-names>
+
+    <b>&lt;!-- We recommend using the v3 setting if custom string encryption is applied to ALL your classes. -->
+    &lt;!-- This way Allatori would not add any additional (unused) string decryption methods. -->
+    &lt;!-- If you combine custom string encryption and Allatori string encryption, then the default v4 setting is recommended. -->
+    &lt;property name="string-encryption-version" value="v3"/>
+
+    &lt;!-- Disabling string encryption in custom decryption methods, as it could lead to infinite recursive calls. -->
+    &lt;property name="string-encryption" value="disable" apply2class="class com.allatori.custom.EncryptDecryptString" apply2method="decrypt*(java.lang.String)"/>
+
+    &lt;property name="string-encryption" value="maximum"/>
+    &lt;property name="string-encryption-type" value="custom(com.allatori.custom.EncryptDecryptString.encryptString, com.allatori.custom.EncryptDecryptString.decryptString)"/></b>
+
+    &lt;property name="log-file" value="log.xml"/>
+&lt;/config>
+</pre>
+
+<br/><br/>You can combine Allatori string encryption with custom string encryption. Applying custom string encryption to classes in <i>com.some.package</i> only:
+<pre>
+    &lt;property name="string-encryption-type" value="custom(package.EncryptClassName.encryptMethodName, package.DecryptClassName.decryptMethodName)" apply2class="class com.some.package.*"/>
+</pre>
+
+<br/><br/>You can use multiple string encryption/decryption methods:
+<pre>
+    &lt;property name="string-encryption-type" value="custom(package.EncryptClassName1.encryptMethodName1, package.DecryptClassName1.decryptMethodName1)" apply2class="class com.some.package.*"/>
+    &lt;property name="string-encryption-type" value="custom(package.EncryptClassName2.encryptMethodName2, package.DecryptClassName2.decryptMethodName2)" apply2class="class com.some.other.package.*"/>
+    &lt;!-- Methods for classes not matched by the rules above -->
+    &lt;property name="string-encryption-type" value="custom(package.EncryptClassName3.encryptMethodName3, package.DecryptClassName3.decryptMethodName3)"/>
+</pre>
+
+<br/><br/>Encryption methods are needed during obfuscation only, they are not needed in the runtime of your application. They could be located in a separate jar file not included in your distribution.
+<br/><br/>Decryption methods are needed in the runtime, you can put them in any classes of your application.
+<br/><br/>Custom string encryption feature could be used for internationalization, as Allatori will wrap all string literals (if string encryption is set to maximum) with <i>methodCall("String literal")</i>.
+You can log all strings in the encryption method, translate them, and decryption method will replace strings with internationalized version in the runtime.
+
+<br/><br/>
+</p>
+<p><a href="../step14-eclipse/step14.html">Step 14</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.html">Contents</a></p>
+</body>
+</html>
