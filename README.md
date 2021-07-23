@@ -1,7 +1,9 @@
 # EncryptDecryptSolution  
-加密方式AES/CBC/PKCS5Padding
+客户端下载文件全流程加密解密方案，加密、解密、使用全流程不暴露密钥、原文，适用场景下载加密的动画文件后解密并在内存中播放，隔绝存储
 
-## EncryptGUI 资源文件加密图形化界面
+加密方式使用AES/CBC/PKCS5Padding，你也可以自己修改
+
+## EncryptGUI 资源文件加密图形化界面，额外支持，非必需
 修改AESFileUtil内的iv、passwordBytes  
 依次点击 File ➡️ Project Structure ➡️ Artifacts ➡️ + Jar ➡️ From module ➡️ 设置MainClass找到EncryptGUI，Dir for Meta 目录src后面的删除  
 配置完成后点击 Build ➡️ Build Artifacts
@@ -53,4 +55,5 @@ UnlimitedJCEPolicyJDK8目录下的两个文件
 使用Allatori 参考链接https://blog.csdn.net/jianning0925/article/details/107708437
 
 ## VAP 
-我在VAP提交了代码，你可以使用StreamContainer传入解密出的byteArray直接进行播放，避免了解密到磁盘目录被他人盗用
+我在VAP提交了代码，你可以使用StreamContainer传入解密出的byteArray直接进行播放，避免了解密到磁盘目录被他人盗用 
+https://github.com/Tencent/vap/commit/2aee1bd21930f4ce0c9f0ecb56ad2645f392e38f
