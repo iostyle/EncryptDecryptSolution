@@ -20,3 +20,26 @@
   将这个文件拷贝到你的Android项目中，复制完整包名，写入android-aes-jni main.c TARGET_CLASS
   System.loadLibrary("你的so库名(lib后 .so前)");  
   调用crypt方法进行解密即可 
+
+## 加密图形化界面使用方式  
+1.快速启动
+
+Windows 
+运行 Windows.bat
+
+MacOS 
+打开终端 cd至本目录
+chmod +x MacOS.sh
+./MacOS.sh
+
+2.手动启动
+MacOS 终端/Windows CMD：java -jar Encrypt.jar (注意路径)
+
+## 由于美国法律限制，基于你的jdk版本，你可能会遇到这个错误
+java.security.InvalidKeyException: Illegal key size 
+报错解决方案：
+
+UnlimitedJCEPolicyJDK8目录下的两个文件
+
+如果安装了JRE，将两个jar文件放到%JRE_HOME%\lib\security目录下覆盖原来的文件
+如果安装了JDK,还要将两个jar文件也放到%JDK_HOME%\jre\lib\security目录下覆盖原来文件。
