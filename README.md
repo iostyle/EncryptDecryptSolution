@@ -3,11 +3,6 @@
 
 加密方式使用AES/CBC/PKCS5Padding，你也可以自己修改
 
-## EncryptGUI 资源文件加密图形化界面，额外支持，非必需
-修改AESFileUtil内的iv、passwordBytes  
-依次点击 File ➡️ Project Structure ➡️ Artifacts ➡️ + Jar ➡️ From module ➡️ 设置MainClass找到EncryptGUI，Dir for Meta 目录src后面的删除  
-配置完成后点击 Build ➡️ Build Artifacts
-
 ## android-aes-jni 用于生成解密so库
 
 ### android.mk  
@@ -22,6 +17,13 @@
   将这个文件拷贝到你的Android项目中，复制完整包名，写入android-aes-jni main.c TARGET_CLASS
   System.loadLibrary("你的so库名(lib后 .so前)");  
   调用crypt方法进行解密即可 
+  
+## EncryptGUI 文件加密图形化界面，额外支持，非必需
+修改AESFileUtil内的iv、passwordBytes  
+依次点击 File ➡️ Project Structure ➡️ Artifacts ➡️ + Jar ➡️ From module ➡️ 设置MainClass找到EncryptGUI，Dir for Meta 目录src后面的删除  
+配置完成后点击 Build ➡️ Build Artifacts  
+
+这里我建议你的jdk版本配置为1.8，如果你使用高版本jdk生成的jar包在别人的电脑上运行会存在兼容性的问题
 
 ## 加密图形化界面使用方式  
 1.快速启动
@@ -43,8 +45,8 @@ java.security.InvalidKeyException: Illegal key size
 
 UnlimitedJCEPolicyJDK8目录下的两个文件
 
-如果安装了JRE，将两个jar文件放到%JRE_HOME%\lib\security目录下覆盖原来的文件
-如果安装了JDK,还要将两个jar文件也放到%JDK_HOME%\jre\lib\security目录下覆盖原来文件。
+如果安装了JRE，将两个jar文件放到%JRE_HOME%\lib\security目录下覆盖原来的文件  
+如果安装了JDK，还要将两个jar文件也放到%JDK_HOME%\jre\lib\security目录下覆盖原来文件。
 
 ## 出于安全考虑，我强烈建议你进行加固处理，无论是so库还是jar包
 
