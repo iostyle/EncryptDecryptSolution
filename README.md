@@ -65,6 +65,26 @@ UnlimitedJCEPolicyJDK8目录下的两个文件
 https://github.com/Tencent/vap/commit/2aee1bd21930f4ce0c9f0ecb56ad2645f392e38f  
 
 ## 七。鸣谢 
-https://github.com/VincentJin-91  
-https://github.com/panxw  
-https://github.com/Tencent/vap  
+
+
+ 
+ <table><tr>
+   <td align="center">
+  <a href="https://github.com/VincentJin-91"><img src="https://avatars.githubusercontent.com/u/15683694?v=4" width="100px;" alt="VincentJin-91"/>
+   <br></br><sub><b>VincentJin-91</b></sub>
+    
+   <td align="center">
+  <a href="https://github.com/panxw"><img src="https://avatars.githubusercontent.com/u/1332515?v=4" width="100px;" alt="panxw"/>
+  <br></br><sub><b>panxw</b></sub>
+
+   <td align="center">
+  <a href="https://github.com/hexleo"><img src="https://avatars.githubusercontent.com/u/3285051?v=4" width="100px;" alt="hexleo"/>
+  <br></br><sub><b>hexleo</b></sub>
+    
+   <td align="center">
+  <a href="https://github.com/Tencent/vap"><img src="https://github.com/iostyle/ImageRepo/blob/master/vap-player.png" width="100px;" alt="vap"/>
+  <br></br><sub><b>VAP</b></sub>
+
+</td></tr></table>
+ 
+
